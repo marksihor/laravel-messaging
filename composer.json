@@ -1,5 +1,5 @@
 {
-    "name": "marksihor/laravel-messagfing",
+    "name": "marksihor/laravel-messaging",
     "description": "Simple laravel messaging",
     "authors": [
         {
@@ -12,12 +12,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Marksihor\\LaravelMessaging\\": "src"
+            "MarksIhor\\LaravelMessaging\\": "src"
         }
     },
     "extra": {
         "laravel": {
-            "providers": ["Marksihor\\LaravelMessaging\\MessagingServiceProvider"]
+            "providers": ["MarksIhor\\LaravelMessaging\\MessagingServiceProvider"]
         }
     }
 }
