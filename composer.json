@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "laravel/framework": "^5.5|~6.0|~7.0"
+        "laravel/framework": "~7.0"
     },
     "autoload": {
         "psr-4": {
@@ -17,7 +17,7 @@
     },
     "extra": {
         "laravel": {
-            "providers": ["marksihor\\LaravelMessaging\\MessagingServiceProvider"]
+            "providers": ["Marksihor\\LaravelMessaging\\MessagingServiceProvider"]
         }
     }
 }
