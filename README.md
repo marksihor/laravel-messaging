@@ -18,7 +18,7 @@ $ php artisan vendor:publish --provider="MarksIhor\\LaravelMessaging\\MessagingS
 
 ## Usage
 
-### Traits
+### Use trait on User Model
 
 #### `MarksIhor\LaravelMessaging\Traits\Messageable`
 
