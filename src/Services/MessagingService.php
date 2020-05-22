@@ -2,13 +2,18 @@
 
 namespace MarksIhor\LaravelMessaging\Services;
 
+use Illuminate\Support\Facades\DB;
 use MarksIhor\LaravelMessaging\Models\{Chat, ChatMessage};
 
 class MessagingService
 {
     public function createMessage(array $data): ChatMessage
     {
-        return ChatMessage::create($data);
+        $message = ChatMessage::create($data);
+
+        $this->markUnreadForRecipients($message);
+
+        return $message;
     }
 
     public function sendToChat(Chat $chat, $user, array $data)
@@ -48,5 +53,15 @@ class MessagingService
             'status' => 'error',
             'message' => $message
         ];
+    }
+
+    private static function markUnreadForRecipients(ChatMessage $message)
+    {
+        DB::table('chat_user')->where('user_id', '<>', $message->user_id)->update(['read' => 0]);
+    }
+
+    public static function markReadForUser(Chat $chat, int $userId)
+    {
+        DB::table('chat_user')->where('user_id', $userId)->update(['read' => 1]);
     }
 }

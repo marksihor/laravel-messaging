@@ -11,16 +11,21 @@ trait Messageable
     {
         return $this->belongsToMany('MarksIhor\LaravelMessaging\Models\Chat')
             ->orderBy('updated_at', 'desc')
+            ->withPivot('read')
             ->with('message');
     }
 
     public function chat(int $id)
     {
-        return Chat::where('id', $id)->whereHas('users', function ($query) {
+        $chat = Chat::where('id', $id)->whereHas('users', function ($query) {
             $query->where('id', $this->id);
         })
             ->with('messages')
             ->first();
+
+        if ($chat) MessagingService::markReadForUser($chat, $this->id);
+
+        return $chat;
     }
 
     public function sendMessageToChat(int $chatId, array $data): array

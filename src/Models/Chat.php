@@ -7,8 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Chat extends Model
 {
     protected $guarded = ['id'];
-    
+
     protected $hidden = ['pivot'];
+
+    protected $appends = ['read'];
 
     public function messages()
     {
@@ -25,5 +27,10 @@ class Chat extends Model
     public function users()
     {
         return $this->belongsToMany(config('auth.providers.users.model'));
+    }
+
+    public function getReadAttribute()
+    {
+        return $this->pivot->read;
     }
 }
