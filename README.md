@@ -4,7 +4,7 @@ Simple messaging between users.
 ## Installing
 
 ```shell
-$ composer require marksihor/laravel-messaging
+$ composer require marksihor/laravel-messaging -vvv
 ```
 
 ### Migrations
@@ -47,6 +47,18 @@ $user()->chat(1); // get one chat with all messages
 
 $user()->sendMessageToChat(1, ['text' => 'message to chat']); // send message to specified chat (if user is in the chat)
 $user()->sendMessageToUser($recipient, ['text' => 'message to user']); // send message to specified recipient
+```
+
+If You need manually to change "read" status, You can do the following:
+
+```php
+
+use MarksIhor\LaravelMessaging\Services\MessagingService;
+
+<...>
+MessagingService::markReadForUser($chatId, $userId, $type === 'read' ? 1 : 0)
+<...>
+
 ```
 
 ## License
