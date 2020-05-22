@@ -31,6 +31,6 @@ class Chat extends Model
 
     public function getReadAttribute()
     {
-        return $this->pivot->read;
+        return $this->pivot ? $this->pivot->read : null;
     }
 }
