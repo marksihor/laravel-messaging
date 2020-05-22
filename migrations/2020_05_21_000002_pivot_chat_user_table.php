@@ -16,6 +16,7 @@ class PivotChatUserTable extends Migration
         Schema::create('chat_user', function (Blueprint $table) {
             $table->unsignedBigInteger('chat_id')->index();
             $table->unsignedBigInteger('user_id')->index();
+            $table->unsignedTinyInteger('read')->default(0);
 
             $table->foreign('chat_id')->references('id')->on('chats')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

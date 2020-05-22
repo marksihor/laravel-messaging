@@ -36,14 +36,14 @@ trait Messageable
             return (new MessagingService)->sendToChat($chat, $this, $data);
         }
 
-        return MessagingService::errorResponse('No such chat.');
+        return MessagingService::response('error', 'No such chat.');
 
     }
 
     public function sendMessageToUser($user, array $data)
     {
         if ($this->id === $user->id) {
-            return MessagingService::errorResponse('Trying to send the message to Yourself.');
+            return MessagingService::response('error', 'Trying to send the message to Yourself.');
         }
 
         return (new MessagingService)->sendToUser($this, $user, $data);
