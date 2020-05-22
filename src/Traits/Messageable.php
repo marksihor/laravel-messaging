@@ -10,35 +10,43 @@ trait Messageable
     public function chats()
     {
         return $this->belongsToMany('MarksIhor\LaravelMessaging\Models\Chat')
-            ->orderBy('updated_at', 'asc')
+            ->orderBy('updated_at', 'desc')
             ->with('message');
     }
 
     public function chat(int $id)
     {
-        return Chat::where('id', $id)->whereHas('users', function ($query) {
+        $chat = Chat::where('id', $id)->whereHas('users', function ($query) {
             $query->where('id', $this->id);
         })
             ->with('messages')
             ->first();
+
+        if ($chat) {
+            return $chat;
+        }
+
+        return MessagingService::errorResponse('No such chat.');
     }
 
-    public function sendMessageToChat(int $chatId, array $data)
+    public function sendMessageToChat(int $chatId, array $data): array
     {
         $chat = $this->chat($chatId);
 
         if ($chat) {
             return (new MessagingService)->sendToChat($chat, $this, $data);
-        } else {
-            return response()->json([
-                'status' => 'error',
-                'message' => 'No such chat.'
-            ]);
         }
+
+        return MessagingService::errorResponse('No such chat.');
+
     }
 
     public function sendMessageToUser($user, array $data)
     {
+        if ($this->id === $user->id) {
+            return MessagingService::errorResponse('Trying to send the message to Yourself.');
+        }
+
         return (new MessagingService)->sendToUser($this, $user, $data);
     }
 }

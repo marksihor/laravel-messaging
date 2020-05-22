@@ -13,6 +13,8 @@ class MessagingService
 
     public function sendToChat(Chat $chat, $user, array $data)
     {
+        if (!isset($data['text']) || !$data['text']) return $this->errorResponse('Text is required');
+
         $chat->touch();
 
         $this->createMessage([
@@ -21,17 +23,15 @@ class MessagingService
             'text' => $data['text'] ?? ''
         ]);
 
-        return response()->json([
+        return [
             'status' => 'success',
             'message' => 'The message has been sent.'
-        ]);
+        ];
     }
 
     public function sendToUser($sender, $recipient, array $data)
     {
-        $chat = Chat::whereHas('users', function ($query) use ($sender, $recipient) {
-            $query->whereIn('id', [$sender->id, $recipient->id]);
-        })->first();
+        $chat = Chat::whereHas('users', fn($q) => $q->where('id', $recipient->id))->first();
 
         if (!$chat) {
             $chat = Chat::create();
@@ -40,5 +40,13 @@ class MessagingService
         }
 
         return $this->sendToChat($chat, $sender, $data);
+    }
+
+    public static function errorResponse(string $message): array
+    {
+        return [
+            'status' => 'error',
+            'message' => $message
+        ];
     }
 }
