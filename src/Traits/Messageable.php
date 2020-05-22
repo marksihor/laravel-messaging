@@ -29,6 +29,11 @@ trait Messageable
 
         if ($chat) {
             return (new MessagingService)->sendToChat($chat, $this, $data);
+        } else {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'No such chat.'
+            ]);
         }
     }
 
