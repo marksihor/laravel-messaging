@@ -25,7 +25,7 @@ class MessagingService
         $this->createMessage([
             'user_id' => $user->id,
             'chat_id' => $chat->id,
-            'text' => $data['text'] ?? ''
+            'text' => $data['text']
         ]);
 
         return [
@@ -57,11 +57,16 @@ class MessagingService
 
     private static function markUnreadForRecipients(ChatMessage $message)
     {
-        DB::table('chat_user')->where('user_id', '<>', $message->user_id)->update(['read' => 0]);
+        DB::table('chat_user')
+            ->where('user_id', '<>', $message->user_id)
+            ->where('chat_id', $message->chat_id)
+            ->update(['read' => 0]);
     }
 
-    public static function markReadForUser(Chat $chat, int $userId)
+    public static function markReadForUser(int $chatId, int $userId, int $value)
     {
-        DB::table('chat_user')->where('user_id', $userId)->update(['read' => 1]);
+        DB::table('chat_user')
+            ->where(['chat_id' => $chatId, 'user_id' => $userId])
+            ->update(['read' => $value]);
     }
 }

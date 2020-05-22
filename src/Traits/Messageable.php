@@ -23,7 +23,7 @@ trait Messageable
             ->with('messages')
             ->first();
 
-        if ($chat) MessagingService::markReadForUser($chat, $this->id);
+        if ($chat) MessagingService::markReadForUser($chat->id, $this->id, 1);
 
         return $chat;
     }
