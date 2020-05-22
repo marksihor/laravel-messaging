@@ -16,17 +16,11 @@ trait Messageable
 
     public function chat(int $id)
     {
-        $chat = Chat::where('id', $id)->whereHas('users', function ($query) {
+        return Chat::where('id', $id)->whereHas('users', function ($query) {
             $query->where('id', $this->id);
         })
             ->with('messages')
             ->first();
-
-        if ($chat) {
-            return $chat;
-        }
-
-        return MessagingService::errorResponse('No such chat.');
     }
 
     public function sendMessageToChat(int $chatId, array $data): array
