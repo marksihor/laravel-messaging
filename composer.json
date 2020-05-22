@@ -1,6 +1,7 @@
 {
     "name": "marksihor/laravel-messaging",
     "description": "Simple laravel messaging",
+    "license": "MIT",
     "authors": [
         {
             "name": "Ihor Korotkyi",
