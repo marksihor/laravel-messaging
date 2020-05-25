@@ -17,7 +17,7 @@ class CreateChatMessagesTable extends Migration
             $table->id();
             $table->foreignId('chat_id')->constrained();
             $table->foreignId('user_id')->nullable();
-            $table->text('text');
+            $table->json('data')->nullable();
             $table->timestamps();
         });
     }

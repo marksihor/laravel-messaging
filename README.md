@@ -46,7 +46,7 @@ $user()->chats; // get all chats available for given user (with last message)
 $user()->chat(1); // get one chat with all messages
 
 $user()->sendMessageToChat(1, ['text' => 'message to chat']); // send message to specified chat (if user is in the chat)
-$user()->sendMessageToUser($recipient, ['text' => 'message to user']); // send message to specified recipient
+$user()->sendMessageToUser($recipient, ['text' => 'message to user', 'link' => 'https://some.link']); // send message to specified recipient
 ```
 
 If You need manually to change "read" status, You can do the following:
