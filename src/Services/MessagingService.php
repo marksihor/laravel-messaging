@@ -18,14 +18,14 @@ class MessagingService
 
     public function sendToChat(Chat $chat, $user, array $data)
     {
-        if (!isset($data['text']) || !$data['text']) return $this->response('error', 'Text is required.');
+        if (!count($data)) return $this->response('error', 'The message should not be empty.');
 
         $chat->touch();
 
         $this->createMessage([
             'user_id' => $user->id,
             'chat_id' => $chat->id,
-            'text' => $data['text']
+            'data' => $data
         ]);
 
         return $this->response('success', 'The message has been sent.');
