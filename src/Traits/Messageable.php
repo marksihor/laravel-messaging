@@ -25,7 +25,7 @@ trait Messageable
 
         if ($chat) MessagingService::markReadForUser($chat->id, $this->id, 1);
 
-        return collect($chat)->except(['read']);
+        return $chat;
     }
 
     public function sendMessageToChat(int $chatId, array $data): array
