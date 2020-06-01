@@ -22,13 +22,13 @@ class MessagingService
 
         $chat->touch();
 
-        $this->createMessage([
+        $message = $this->createMessage([
             'user_id' => $user->id,
             'chat_id' => $chat->id,
             'data' => $data
         ]);
 
-        return $this->response('success', 'The message has been sent.');
+        return $this->response('success', $message);
     }
 
     public function sendToUser($sender, $recipient, array $data)
@@ -46,7 +46,7 @@ class MessagingService
         return $this->sendToChat($chat, $sender, $data);
     }
 
-    public static function response(string $status, string $message): array
+    public static function response(string $status, $message): array
     {
         return [
             'status' => $status,
