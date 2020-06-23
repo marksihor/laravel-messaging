@@ -33,7 +33,9 @@ class MessagingService
 
     public function sendToUser($sender, $recipient, array $data)
     {
-        $chat = Chat::whereHas('users', fn($q) => $q->where('id', $recipient->id))->first();
+        $chat = Chat::whereHas('users', fn($q) => $q->where('id', $sender->id))
+            ->whereHas('users', fn($q) => $q->where('id', $recipient->id))
+            ->first();
 
         if (!$chat) {
             $chat = Chat::create();
