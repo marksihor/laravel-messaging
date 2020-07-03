@@ -15,6 +15,24 @@ trait Messageable
             ->with('message', 'users');
     }
 
+    public function chatsUnread()
+    {
+        return $this->belongsToMany('MarksIhor\LaravelMessaging\Models\Chat')
+            ->orderBy('updated_at', 'desc')
+            ->withPivot('read')
+            ->wherePivot('read', 0)
+            ->with('message', 'users');
+    }
+
+    public function chatsRead()
+    {
+        return $this->belongsToMany('MarksIhor\LaravelMessaging\Models\Chat')
+            ->orderBy('updated_at', 'desc')
+            ->withPivot('read')
+            ->wherePivot('read', 0)
+            ->with('message', 'users');
+    }
+
     public function chat(int $id)
     {
         $chat = Chat::where('id', $id)->whereHas('users', function ($query) {
