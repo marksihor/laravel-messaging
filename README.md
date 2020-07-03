@@ -43,6 +43,8 @@ class User extends Authenticatable
 ```php
 
 $user()->chats; // get all chats available for given user (with last message)
+$user()->chatsUnread; // get all unread chats
+$user()->chatsRead; // get all read chats
 $user()->chat(1); // get one chat with all messages
 
 $user()->sendMessageToChat(1, ['text' => 'message to chat']); // send message to specified chat (if user is in the chat)
