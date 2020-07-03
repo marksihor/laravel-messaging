@@ -29,7 +29,7 @@ trait Messageable
         return $this->belongsToMany('MarksIhor\LaravelMessaging\Models\Chat')
             ->orderBy('updated_at', 'desc')
             ->withPivot('read')
-            ->wherePivot('read', 0)
+            ->wherePivot('read', 1)
             ->with('message', 'users');
     }
 
