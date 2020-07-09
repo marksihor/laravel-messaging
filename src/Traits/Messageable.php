@@ -38,7 +38,7 @@ trait Messageable
         $chat = Chat::where('id', $id)->whereHas('users', function ($query) {
             $query->where('id', $this->id);
         })
-            ->with('messages')
+            ->with('users', 'messages')
             ->first();
 
         if ($chat) MessagingService::markReadForUser($chat->id, $this->id, 1);
